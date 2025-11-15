@@ -35,8 +35,23 @@ jobs:
 
       - name: Download Niblit source
         run: |
-          wget -q https://github.com/niblit-aios/aios/releases/download/v1.0.0/aios-src.tar.gz
-          tar -xzf aios-src.tar.gz
+          # Set download directory
+          SRC_DIR="./niblit-src"
+          mkdir -p "$SRC_DIR"
+
+          # Download and verify
+          wget -O "$SRC_DIR/aios-src.tar.gz" https://github.com/niblit-aios/aios/releases/download/v1.0.0/aios-src.tar.gz
+          if [ $? -ne 0 ]; then
+            echo "Download failed!"
+            exit 1
+          fi
+
+          # Extract
+          tar -xzf "$SRC_DIR/aios-src.tar.gz" -C "$SRC_DIR"
+          if [ $? -ne 0 ]; then
+            echo "Extraction failed!"
+            exit 1
+          fi
 
       - name: Build APK
         run: |
