@@ -1,23 +1,47 @@
+# .github/workflows/build.yml
 name: build-niblit-aios
+
 on:
   workflow_dispatch:
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
+      # Step 1: Checkout your repo
       - uses: actions/checkout@v4
+
+      # Step 2: Setup Java 17
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 17
+
+      # Step 3: Setup Android SDK
       - uses: android-actions/setup-android@v3
+        with:
+          cmdline-tools-version: 12266719
+          accept-android-sdk-licenses: true
+          log-accepted-android-sdk-licenses: true
+          packages: "platform-tools,tools"
+
+      # Step 4: Auto-accept any remaining licenses
+      - run: yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --licenses
+
+      # Step 5: Download and extract your Niblit source
       - run: |
           echo "sdk.dir=$ANDROID_SDK_ROOT" > local.properties
           wget -q https://github.com/niblit-aios/aios/releases/download/v1.0.0/aios-src.tar.gz
           tar -xzf aios-src.tar.gz
+
+      # Step 6: Build the ARMv7 APK
+      - run: |
           ./gradlew assembleArm7Release
           mv app/build/outputs/apk/arm7/release/app-arm7-release-unsigned.apk niblit-aios-armv7-unsigned.apk
           echo "SHA256: $(sha256sum niblit-aios-armv7-unsigned.apk | cut -d' ' -f1)"
+
+      # Step 7: Upload the APK as an artifact
       - uses: actions/upload-artifact@v4
         with:
           name: niblit-aios-armv7-unsigned
