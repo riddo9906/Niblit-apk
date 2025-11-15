@@ -1,4 +1,3 @@
-# .github/workflows/build.yml
 name: build-niblit-aios
 
 on:
@@ -46,19 +45,19 @@ jobs:
           mv app/build/outputs/apk/arm7/release/app-arm7-release-unsigned.apk niblit-aios-armv7-unsigned.apk
           echo "SHA256: $(sha256sum niblit-aios-armv7-unsigned.apk | cut -d' ' -f1)"
 
+      - name: Run Unit Tests
+        run: |
+          chmod +x ./gradlew
+          ./gradlew testArm7ReleaseUnitTest
+
+      - name: Show build metrics in summary
+        run: |
+          echo "### Build Success :white_check_mark:" >> $GITHUB_STEP_SUMMARY
+          echo "APK SHA256: $(sha256sum niblit-aios-armv7-unsigned.apk | cut -d' ' -f1)" >> $GITHUB_STEP_SUMMARY
+          echo "APK size: $(du -h niblit-aios-armv7-unsigned.apk | cut -f1)" >> $GITHUB_STEP_SUMMARY
+
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
-        with:
-          name: niblit-aios-armv7-unsigned
-          path: niblit-aios-armv7-unsigned.apk
-      # Step 6: Build the ARMv7 APK
-      - run: |
-          ./gradlew assembleArm7Release
-          mv app/build/outputs/apk/arm7/release/app-arm7-release-unsigned.apk niblit-aios-armv7-unsigned.apk
-          echo "SHA256: $(sha256sum niblit-aios-armv7-unsigned.apk | cut -d' ' -f1)"
-
-      # Step 7: Upload the APK as an artifact
-      - uses: actions/upload-artifact@v4
         with:
           name: niblit-aios-armv7-unsigned
           path: niblit-aios-armv7-unsigned.apk
