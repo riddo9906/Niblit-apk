@@ -62,24 +62,22 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: niblit-aios-armv7-unsigned
-          path: niblit-aios-armv7-unsigned.apk        run: |
-          # Set download directory
-          SRC_DIR="./niblit-src"
-          mkdir -p "$SRC_DIR"
-
-          # Download and verify
-          wget -O "$SRC_DIR/aios-src.tar.gz" https://github.com/niblit-aios/aios/releases/download/v1.0.0/aios-src.tar.gz
-          if [ $? -ne 0 ]; then
+          path: niblit-aios-armv7-unsigned.apk        
+          run: |
+            SRC_DIR="./niblit-src"
+            mkdir -p "$SRC_DIR"
+            
+            wget -O "$SRC_DIR/aios-src.tar.gz" https://github.com/niblit-aios/aios/releases/download/v1.0.0/aios-src.tar.gz
+            if [ $? -ne 0 ]; then
             echo "Download failed!"
             exit 1
-          fi
+            fi
 
-          # Extract
-          tar -xzf "$SRC_DIR/aios-src.tar.gz" -C "$SRC_DIR"
-          if [ $? -ne 0 ]; then
+            tar -xzf "$SRC_DIR/aios-src.tar.gz" -C "$SRC_DIR"
+            if [ $? -ne 0 ]; then
             echo "Extraction failed!"
             exit 1
-          fi
+            fi
 
       - name: Build APK
         run: |
