@@ -23,18 +23,46 @@ jobs:
           cmdline-tools-version: 12266719
           accept-android-sdk-licenses: true
           log-accepted-android-sdk-licenses: true
-          packages: tools platform-tools
+          packages: |
+            tools
+            platform-tools
+            build-tools;33.0.2
+            platforms;android-33
 
       - name: Create local.properties
         run: |
-          if [ -z "$ANDROID_SDK_ROOT" ]; then
-            echo "ANDROID_SDK_ROOT not set!"
-            exit 1
-          fi
           echo "sdk.dir=$ANDROID_SDK_ROOT" > local.properties
 
       - name: Download Niblit source
         run: |
+          SRC_DIR="./niblit-src"
+          mkdir -p "$SRC_DIR"
+          wget -O "$SRC_DIR/aios-src.tar.gz" https://github.com/niblit-aios/aios/releases/download/v1.0.0/aios-src.tar.gz
+          tar -xzf "$SRC_DIR/aios-src.tar.gz" -C "$SRC_DIR"
+
+      - name: Build APK
+        run: |
+          chmod +x ./gradlew
+          ./gradlew assembleArm7Release
+          cp app/build/outputs/apk/arm7/release/app-arm7-release-unsigned.apk niblit-aios-armv7-unsigned.apk
+          echo "SHA256: $(sha256sum niblit-aios-armv7-unsigned.apk | cut -d' ' -f1)"
+
+      - name: Run Unit Tests
+        run: |
+          chmod +x ./gradlew
+          ./gradlew testArm7ReleaseUnitTest
+
+      - name: Show build metrics in summary
+        run: |
+          echo "### Build Success :white_check_mark:" >> $GITHUB_STEP_SUMMARY
+          echo "APK SHA256: $(sha256sum niblit-aios-armv7-unsigned.apk | cut -d' ' -f1)" >> $GITHUB_STEP_SUMMARY
+          echo "APK size: $(du -h niblit-aios-armv7-unsigned.apk | cut -f1)" >> $GITHUB_STEP_SUMMARY
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: niblit-aios-armv7-unsigned
+          path: niblit-aios-armv7-unsigned.apk        run: |
           # Set download directory
           SRC_DIR="./niblit-src"
           mkdir -p "$SRC_DIR"
