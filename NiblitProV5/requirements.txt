@@ -1,8 +1,6 @@
-kivy==2.1.0
-kivymd==1.1.1
-requests
-psutil
-plyer
-SpeechRecognition
-cryptography
-flask
+fastapi>=0.101.0
+uvicorn>=0.24.0
+requests>=2.32.0
+psutil>=5.9.5
+cryptography>=41.0.3
+python-dotenv>=1.0.0
