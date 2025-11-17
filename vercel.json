@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "main_refactor.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "50mb"
+      }
+    }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "main_refactor.py" }
+  ],
+  "env": {
+    "OPENAI_API_KEY": "@openai_key",
+    "OPENAI_MODEL": "@openai_model",
+    "HF_TOKEN": "@hf_token",
+    "HF_MODEL": "@hf_model",
+    "GITHUB_PAT": "@github_pat"
+  }
+}

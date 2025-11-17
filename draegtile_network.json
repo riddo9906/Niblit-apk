@@ -1,0 +1,79 @@
+{
+  "Education": {
+    "status": "active",
+    "resources": [],
+    "last_update": null
+  },
+  "Agriculture": {
+    "status": "active",
+    "resources": [
+      {
+        "info": "placeholder"
+      }
+    ],
+    "last_update": "2025-11-16T17:18:58.712256Z"
+  },
+  "Finance": {
+    "status": "active",
+    "resources": [
+      {
+        "info": "placeholder"
+      }
+    ],
+    "last_update": "2025-11-16T17:18:58.716773Z"
+  },
+  "Mobility": {
+    "status": "active",
+    "resources": [
+      {
+        "info": "placeholder"
+      }
+    ],
+    "last_update": "2025-11-16T17:18:58.721038Z"
+  },
+  "Infrastructure": {
+    "status": "active",
+    "resources": [
+      {
+        "info": "placeholder"
+      }
+    ],
+    "last_update": "2025-11-16T17:18:58.724869Z"
+  },
+  "Environment": {
+    "status": "active",
+    "resources": [
+      {
+        "info": "placeholder"
+      }
+    ],
+    "last_update": "2025-11-16T17:18:58.729543Z"
+  },
+  "Networking": {
+    "status": "active",
+    "resources": [
+      {
+        "info": "placeholder"
+      }
+    ],
+    "last_update": "2025-11-16T17:18:58.734161Z"
+  },
+  "I.T. & Security": {
+    "status": "active",
+    "resources": [
+      {
+        "info": "placeholder"
+      }
+    ],
+    "last_update": "2025-11-16T17:18:58.738588Z"
+  },
+  "Human Development": {
+    "status": "active",
+    "resources": [
+      {
+        "info": "placeholder"
+      }
+    ],
+    "last_update": "2025-11-16T17:18:58.747527Z"
+  }
+}
