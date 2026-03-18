@@ -1,3 +1,6 @@
 .env
 Niblit/niblit_memory.json
 Niblit/chat_logs/
+__pycache__/
+*.pyc
+*.pyo
